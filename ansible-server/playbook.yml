@@ -1,0 +1,25 @@
+---
+- name: Install package, create user and start service
+  hosts: local
+  connection: local
+  become: true
+
+  tasks:
+
+    - name: Install Nginx
+      ansible.builtin.apt:
+        name: nginx
+        state: present
+        update_cache: true
+
+    - name: Create Ansible user
+      ansible.builtin.user:
+        name: ansibleuser
+        state: present
+        create_home: true
+
+    - name: Start Nginx service
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled: true
